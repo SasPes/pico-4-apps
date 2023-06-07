@@ -20,6 +20,7 @@ function App() {
             {
                 apps.map(app => {
                     return <div className="Div-flex">
+                        <div><img src={app.logo}/></div>
                         {app.name}
                     </div>;
                 })
