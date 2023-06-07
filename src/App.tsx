@@ -20,9 +20,9 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <button className="button" onClick={handleClick}>Refresh</button>
+                <button className="button" onClick={handleClick}>Load more</button>
                 <img src={logo} className="App-logo" alt="logo"/>
-                <p>List of Pico 4 Apps</p>
+                <p>List of Pico 4 Apps [{apps.length}]</p>
             </header>
 
             {apps && apps.length ? "" :(
@@ -36,7 +36,7 @@ function App() {
             {
                 apps.map(app => {
                     return <div className="Div-flex">
-                        <div><img src={app.logo}/></div>
+                        <div><img src={app.app.logo}/></div>
                         {app.name}
                         <br/><br/>
                     </div>;

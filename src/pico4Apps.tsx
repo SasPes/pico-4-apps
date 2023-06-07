@@ -2,11 +2,11 @@ import React from 'react';
 
 type Pico4Apps = {
     name: string;
-    logo: string;
+    app: SteamApp;
 };
 
-type Logos = {
-    appid: string;
+type SteamApp = {
+    appid: number;
     name: string;
     logo: string;
 };
@@ -24,14 +24,14 @@ async function getPico4Apps() {
     appsName.splice(0, 8)
 
     appsName.map(async name => {
-        let appLogo = await getAppLogo(name);
-        if (appLogo === noLogo) {
+        let appLogo: SteamApp = await getAppLogo(name);
+        if (appLogo.logo === noLogo) {
             appLogo = await getAppLogo(name.substring(0, name.lastIndexOf(" ")));
         }
 
         let newApp: Pico4Apps = {
             name: name,
-            logo: appLogo
+            app: appLogo
         }
         p4a.push(newApp);
     })
@@ -60,26 +60,30 @@ async function getAppsName() {
 }
 
 async function getAppLogo(name: string) {
-    let logos: Logos[] = (await (await fetch(proxyURL + steamUrl + name)).json());
+    let logos: SteamApp[] = (await (await fetch(proxyURL + steamUrl + name)).json());
     if (logos.length === 0) {
-        return noLogo;
+        return {
+            appid: 0,
+            name: name,
+            logo: noLogo
+        };
     } else if (logos.length === 1) {
-        return logos[0].logo;
+        return logos[0];
     } else {
         const selected = Object.values(logos).find(e => e.name === name);
         if (selected !== undefined) {
-            return selected.logo;
+            return selected;
         }
 
         while (name.length !== 0) {
             for (let i = 0; i < logos.length; i++) {
                 if (logos[i].name.startsWith(name)) {
-                    return logos[i].logo;
+                    return logos[i];
                 }
             }
             name = name.substring(0, name.lastIndexOf(" "));
         }
-        return logos[0].logo;
+        return logos[0];
     }
 
 }
