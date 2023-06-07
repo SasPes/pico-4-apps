@@ -2,18 +2,29 @@ import React from 'react';
 
 type Pico4Apps = {
     name: string;
-    app: SteamApp;
+    steamApp: SteamApp;
 };
 
 type SteamApp = {
     appid: number;
     name: string;
     logo: string;
+    review: string;
+};
+
+type SteamAppReview = {
+    query_summary: SteamAppQuerySummary;
+};
+
+type SteamAppQuerySummary = {
+    total_positive: number;
+    total_reviews: number;
 };
 
 const proxyURL = 'https://cors-proxy.fringe.zone/';
 const appsUrl = 'https://picomyp.ml';
 const steamUrl = 'https://steamcommunity.com/actions/SearchApps/';
+const steamReviewUrl = 'https://store.steampowered.com/appreviews/'; // 2151960?json=1
 
 const noLogo = "./img/none_184x69.jpg";
 
@@ -24,14 +35,19 @@ async function getPico4Apps() {
     appsName.splice(0, 8)
 
     appsName.map(async name => {
-        let appLogo: SteamApp = await getAppLogo(name);
-        if (appLogo.logo === noLogo) {
-            appLogo = await getAppLogo(name.substring(0, name.lastIndexOf(" ")));
+        let steamApp: SteamApp = await getAppLogo(name);
+        if (steamApp.logo === noLogo) {
+            steamApp = await getAppLogo(name.substring(0, name.lastIndexOf(" ")));
+        }
+
+        let review = await getAppReview(steamApp.appid);
+        if (review !== undefined) {
+            steamApp.review = review;
         }
 
         let newApp: Pico4Apps = {
             name: name,
-            app: appLogo
+            steamApp: steamApp
         }
         p4a.push(newApp);
     })
@@ -65,7 +81,8 @@ async function getAppLogo(name: string) {
         return {
             appid: 0,
             name: name,
-            logo: noLogo
+            logo: noLogo,
+            review: "NaN"
         };
     } else if (logos.length === 1) {
         return logos[0];
@@ -85,7 +102,13 @@ async function getAppLogo(name: string) {
         }
         return logos[0];
     }
+}
 
+async function getAppReview(appid: number) {
+    if (appid !== 0) {
+        let review: SteamAppReview = (await (await fetch(proxyURL + steamReviewUrl + appid + "?json=1")).json());
+        return (review.query_summary.total_positive * 10 / review.query_summary.total_reviews).toFixed(1);
+    }
 }
 
 export const pico4Apps = getPico4Apps();

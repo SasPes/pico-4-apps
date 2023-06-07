@@ -10,7 +10,7 @@ function App() {
     useEffect(() => {
         setTimeout(() => {
             pico4Apps.then(apps => setApps(apps));
-        }, 3000);
+        }, 1000);
     }, []);
 
     function handleClick() {
@@ -25,7 +25,7 @@ function App() {
                 <p>List of Pico 4 Apps [{apps.length}]</p>
             </header>
 
-            {apps && apps.length ? "" :(
+            {apps && apps.length ? "" : (
                 <div className="lds-facebook">
                     <div></div>
                     <div></div>
@@ -36,9 +36,17 @@ function App() {
             {
                 apps.map(app => {
                     return <div className="Div-flex">
-                        <div><img src={app.app.logo}/></div>
-                        {app.name}
-                        <br/><br/>
+                        <div className="badge_div">
+                            <span className="badge">
+                              <span className="badge_icon">
+                                <b><i className="material-icons">{app.steamApp.review}</i></b>
+                              </span>
+                            </span>
+                        </div>
+                        <br/>
+                        <div><img src={app.steamApp.logo}/></div>
+                        <div>{app.name}</div>
+                        <br/>
                     </div>;
                 })
             }

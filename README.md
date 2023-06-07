@@ -7,6 +7,7 @@ https://p4a.onrender.com
 
 ## Steam
 - https://steamcommunity.com/actions/SearchApps/golf5eclub
+- https://store.steampowered.com/appreviews/2151960?json=1
 - https://store.steampowered.com/api/appdetails?filters=screenshots&appids=2151960
 
 ## Links
