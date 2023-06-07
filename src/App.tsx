@@ -10,7 +10,7 @@ function App() {
     useEffect(() => {
         setTimeout(() => {
             pico4Apps.then(apps => setApps(apps));
-        }, 1000);
+        }, 2500);
     }, []);
 
     function handleClick() {
