@@ -5,6 +5,12 @@ type Pico4Apps = {
     logo: string;
 };
 
+type Logos = {
+    appid: string;
+    name: string;
+    logo: string;
+};
+
 const proxyURL = 'https://cors-proxy.fringe.zone/';
 const appsUrl = 'https://picomyp.ml';
 const steamUrl = 'https://steamcommunity.com/actions/SearchApps/';
@@ -19,6 +25,9 @@ async function getPico4Apps() {
 
     appsName.map(async name => {
         let appLogo = await getAppLogo(name);
+        if (appLogo === noLogo) {
+            appLogo = await getAppLogo(name.substring(0, name.lastIndexOf(" ")));
+        }
 
         let newApp: Pico4Apps = {
             name: name,
@@ -51,11 +60,28 @@ async function getAppsName() {
 }
 
 async function getAppLogo(name: string) {
-    let logo = (await (await fetch(proxyURL + steamUrl + name)).json());
-    if (logo.length == 0) {
+    let logos: Logos[] = (await (await fetch(proxyURL + steamUrl + name)).json());
+    if (logos.length === 0) {
         return noLogo;
+    } else if (logos.length === 1) {
+        return logos[0].logo;
+    } else {
+        const selected = Object.values(logos).find(e => e.name === name);
+        if (selected !== undefined) {
+            return selected.logo;
+        }
+
+        while (name.length !== 0) {
+            for (let i = 0; i < logos.length; i++) {
+                if (logos[i].name.startsWith(name)) {
+                    return logos[i].logo;
+                }
+            }
+            name = name.substring(0, name.lastIndexOf(" "));
+        }
+        return logos[0].logo;
     }
-    return logo[0].logo;
+
 }
 
 export const pico4Apps = getPico4Apps();
