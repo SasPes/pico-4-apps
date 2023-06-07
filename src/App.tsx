@@ -17,6 +17,10 @@ function App() {
         forceUpdate();
     }
 
+    const openInNewTab = (url:string) => {
+        window.open("https://store.steampowered.com/app/" + url, '_blank', 'noreferrer');
+    };
+
     return (
         <div className="App">
             <header className="App-header">
@@ -35,7 +39,7 @@ function App() {
 
             {
                 apps.map(app => {
-                    return <div className="Div-flex">
+                    return <div className="Div-flex" onClick={() => openInNewTab(app.steamApp.appid)}>
                         <div className="badge_div">
                             <span className="badge">
                               <span className="badge_icon">
