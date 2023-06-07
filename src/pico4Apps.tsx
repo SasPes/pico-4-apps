@@ -18,7 +18,7 @@ type SteamAppReview = {
 
 type SteamAppQuerySummary = {
     total_positive: number;
-    total_reviews: number;
+    total_negative: number;
 };
 
 const proxyURL = 'https://cors-proxy.fringe.zone/';
@@ -40,12 +40,12 @@ async function getPico4Apps() {
             steamApp = await getAppLogo(name.substring(0, name.lastIndexOf(" ")));
         }
 
-        let review = await getAppReview(steamApp.appid);
+        const review = await getAppReview(steamApp.appid);
         if (review !== undefined) {
             steamApp.review = review;
         }
 
-        let newApp: Pico4Apps = {
+        const newApp: Pico4Apps = {
             name: name,
             steamApp: steamApp
         }
@@ -55,20 +55,20 @@ async function getPico4Apps() {
 }
 
 async function getAppsName() {
-    let html = (await (await fetch(proxyURL + appsUrl)).text());
+    const html = (await (await fetch(proxyURL + appsUrl)).text());
 
-    let parser = new DOMParser();
-    let doc = parser.parseFromString(html, "text/html");
-    let pre = doc.querySelectorAll("a");
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const pre = doc.querySelectorAll("a");
 
-    let appsName = Array.from(pre).map(data => {
-        let name = data.innerHTML
+    const appsName = Array.from(pre).map(data => {
+        const name = data.innerHTML
             .replace('.zip', '')
             .replace('.apk', '')
             .replaceAll('_', ' ');
 
-        let text = name.split(' ');
-        let remove = " " + text[text.length - 2] + " " + text[text.length - 1];
+        const text = name.split(' ');
+        const remove = " " + text[text.length - 2] + " " + text[text.length - 1];
 
         return name.replace(remove.toString(), '');
     })
@@ -76,7 +76,7 @@ async function getAppsName() {
 }
 
 async function getAppLogo(name: string) {
-    let logos: SteamApp[] = (await (await fetch(proxyURL + steamUrl + name)).json());
+    const logos: SteamApp[] = (await (await fetch(proxyURL + steamUrl + name)).json());
     if (logos.length === 0) {
         return {
             appid: 0,
@@ -106,9 +106,17 @@ async function getAppLogo(name: string) {
 
 async function getAppReview(appid: number) {
     if (appid !== 0) {
-        let review: SteamAppReview = (await (await fetch(proxyURL + steamReviewUrl + appid + "?json=1")).json());
-        return (review.query_summary.total_positive * 10 / review.query_summary.total_reviews).toFixed(1);
+        const review: SteamAppReview = (await (await fetch(proxyURL + steamReviewUrl + appid + "?json=1")).json());
+        return (getRating(review.query_summary.total_positive, review.query_summary.total_negative)).toFixed(1);
     }
+}
+
+function getRating(positiveVotes: number, negativeVotes: number) {
+    const totalVotes = positiveVotes + negativeVotes;
+    const average = positiveVotes / totalVotes;
+    const score = average - (average - 0.5) * Math.pow(2, -Math.log10(totalVotes + 1));
+
+    return score * 10;
 }
 
 export const pico4Apps = getPico4Apps();
