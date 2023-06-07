@@ -39,7 +39,7 @@ function App() {
 
             {
                 apps.map(app => {
-                    return <div className="Div-flex" onClick={() => openInNewTab(app.steamApp.appid)}>
+                    return <div className="Div-flex">
                         <div className="badge_div">
                             <span className="badge">
                               <span className="badge_icon">
@@ -48,7 +48,9 @@ function App() {
                             </span>
                         </div>
                         <br/>
-                        <div><img src={app.steamApp.logo}/></div>
+                        <div className="Div-click" onClick={() => openInNewTab(app.steamApp.appid)}>
+                            <img src={app.steamApp.logo}/>
+                        </div>
                         <div>{app.name}</div>
                         <br/>
                     </div>;
