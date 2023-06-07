@@ -8,8 +8,10 @@ function App() {
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
     useEffect(() => {
-        pico4Apps.then(apps => setApps(apps));
-    }, [ignored]);
+        setTimeout(() => {
+            pico4Apps.then(apps => setApps(apps));
+        }, 3000);
+    }, []);
 
     function handleClick() {
         forceUpdate();
@@ -22,6 +24,14 @@ function App() {
                 <img src={logo} className="App-logo" alt="logo"/>
                 <p>List of Pico 4 Apps</p>
             </header>
+
+            {apps && apps.length ? "" :(
+                <div className="lds-facebook">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            )}
 
             {
                 apps.map(app => {
