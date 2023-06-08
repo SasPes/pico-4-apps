@@ -31,15 +31,17 @@ const noLogo = "./img/none_184x69.jpg";
 async function getPico4Apps() {
     let p4a: Pico4Apps[] = [];
 
+    // all apps names
     let appsName = await getAppsName();
-    appsName.splice(0, 8)
 
     appsName.map(async name => {
+        // app logo
         let steamApp: SteamApp = await getAppLogo(name);
         if (steamApp.logo === noLogo) {
             steamApp = await getAppLogo(name.substring(0, name.lastIndexOf(" ")));
         }
 
+        // app review
         const review = await getAppReview(steamApp.appid);
         if (review !== undefined) {
             steamApp.review = review;
@@ -61,17 +63,26 @@ async function getAppsName() {
     const doc = parser.parseFromString(html, "text/html");
     const pre = doc.querySelectorAll("a");
 
-    const appsName = Array.from(pre).map(data => {
-        const name = data.innerHTML
-            .replace('.zip', '')
-            .replace('.apk', '')
-            .replaceAll('_', ' ');
+    var toRemove: string[] = [];
 
-        const text = name.split(' ');
-        const remove = " " + text[text.length - 2] + " " + text[text.length - 1];
+    var appsName = Array.from(pre).map(data => {
+        const nameOrg: string = data.innerHTML;
+        if (nameOrg.endsWith("/")) {
+            toRemove.push(nameOrg);
+            return nameOrg;
+        } else {
+            const name = nameOrg
+                .replace('.zip', '')
+                .replace('.apk', '')
+                .replaceAll('_', ' ');
 
-        return name.replace(remove.toString(), '');
+            const text = name.split(' ');
+            const remove = " " + text[text.length - 2] + " " + text[text.length - 1];
+
+            return name.replace(remove.toString(), '');
+        }
     })
+    appsName = appsName.filter((el) => !toRemove.includes(el));
     return appsName;
 }
 
@@ -107,11 +118,11 @@ async function getAppLogo(name: string) {
 async function getAppReview(appid: number) {
     if (appid !== 0) {
         const review: SteamAppReview = (await (await fetch(proxyURL + steamReviewUrl + appid + "?json=1")).json());
-        return (getRating(review.query_summary.total_positive, review.query_summary.total_negative)).toFixed(1);
+        return (calcRating(review.query_summary.total_positive, review.query_summary.total_negative)).toFixed(1);
     }
 }
 
-function getRating(positiveVotes: number, negativeVotes: number) {
+function calcRating(positiveVotes: number, negativeVotes: number) {
     const totalVotes = positiveVotes + negativeVotes;
     const average = positiveVotes / totalVotes;
     const score = average - (average - 0.5) * Math.pow(2, -Math.log10(totalVotes + 1));
