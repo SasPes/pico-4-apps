@@ -31,7 +31,7 @@ const noLogo = "./img/none_184x69.jpg";
 async function getPico4Apps() {
     let p4a: Pico4Apps[] = [];
 
-    // all apps names
+    // all apps name
     let appsName = await getAppsName();
 
     appsName.map(async name => {
@@ -63,9 +63,9 @@ async function getAppsName() {
     const doc = parser.parseFromString(html, "text/html");
     const pre = doc.querySelectorAll("a");
 
-    var toRemove: string[] = [];
+    let toRemove: string[] = [];
 
-    var appsName = Array.from(pre).map(data => {
+    let appsName = Array.from(pre).map(data => {
         const nameOrg: string = data.innerHTML;
         if (nameOrg.endsWith("/")) {
             toRemove.push(nameOrg);
