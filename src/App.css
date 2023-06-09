@@ -159,6 +159,7 @@
 
 .footer {
     color: white;
+    padding-bottom: 10px;
 }
 
 .footer-div {
@@ -176,6 +177,12 @@
     background-color: white; /* defines the background color of the image */
     mask: url(https://icons.getbootstrap.com/assets/icons/youtube.svg) no-repeat center / contain;
     -webkit-mask: url(https://icons.getbootstrap.com/assets/icons/youtube.svg) no-repeat center / contain;
+}
+
+.discord {
+    background-color: white; /* defines the background color of the image */
+    mask: url(https://icons.getbootstrap.com/assets/icons/discord.svg) no-repeat center / contain;
+    -webkit-mask: url(https://icons.getbootstrap.com/assets/icons/discord.svg) no-repeat center / contain;
 }
 
 .icon {
