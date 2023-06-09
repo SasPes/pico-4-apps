@@ -1,10 +1,15 @@
 # Pico 4 Apps (P4A)
 
-List of Pico 4 apps with pictures, reviews and links to Steam page  
+List of Pico 4 apps with pictures, rating and links to Steam page  
 
 https://p4a.onrender.com
 
 ![pico4](./src/img/ss.png "Pico 4")
+
+## TODO's
+- [ ] no image available
+- [ ] no reviews
+- [ ] wrong app linked with Steam (ex. "Beat" is not "Beat Saber")
 
 ### Pico 4 list
 ```html
