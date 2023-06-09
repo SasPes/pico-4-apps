@@ -9,7 +9,7 @@ type SteamApp = {
     appid: number;
     name: string;
     logo: string;
-    review: string;
+    rating: string;
 };
 
 type SteamAppReview = {
@@ -41,10 +41,10 @@ async function getPico4Apps() {
             steamApp = await getAppLogo(name.substring(0, name.lastIndexOf(" ")));
         }
 
-        // app review
-        const review = await getAppReview(steamApp.appid);
-        if (review !== undefined) {
-            steamApp.review = review;
+        // app rating
+        const rating = await getAppReview(steamApp.appid);
+        if (rating !== undefined) {
+            steamApp.rating = rating;
         }
 
         const newApp: Pico4Apps = {
@@ -93,7 +93,7 @@ async function getAppLogo(name: string) {
             appid: 0,
             name: name,
             logo: noLogo,
-            review: "NaN"
+            rating: "NaN"
         };
     } else if (logos.length === 1) {
         return logos[0];

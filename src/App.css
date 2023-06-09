@@ -1,14 +1,14 @@
-.App {
+.app {
     text-align: center;
     background-color: #282c34;
 }
 
-.App-logo {
+.app-logo {
     height: 25vmin;
     pointer-events: none;
 }
 
-.App-header {
+.app-header {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,24 +17,24 @@
     color: white;
 }
 
-.App-link {
+.app-link {
     color: #61dafb;
 }
 
-.Apps {
+.apps {
     background-color: #282c34;
     color: white;
 }
 
-.Div-flex {
+.div-flex {
     width: 350px;
     display: inline-block;
     background-color: #282c34;
     color: white;
 }
 
-.Div-click{
-    cursor:pointer;
+.pointer-click {
+    cursor: pointer;
 }
 
 /* CSS */
@@ -155,4 +155,33 @@
     justify-content: center;
     margin-right: 2px;
     margin-left: 2px;
+}
+
+.footer {
+    color: white;
+}
+
+.footer-div {
+    display: flex;
+    justify-content: center;
+}
+
+.github {
+    background-color: white; /* defines the background color of the image */
+    mask: url(https://icons.getbootstrap.com/assets/icons/github.svg) no-repeat center / contain;
+    -webkit-mask: url(https://icons.getbootstrap.com/assets/icons/github.svg) no-repeat center / contain;
+}
+
+.youtube {
+    background-color: white; /* defines the background color of the image */
+    mask: url(https://icons.getbootstrap.com/assets/icons/youtube.svg) no-repeat center / contain;
+    -webkit-mask: url(https://icons.getbootstrap.com/assets/icons/youtube.svg) no-repeat center / contain;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-top: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
