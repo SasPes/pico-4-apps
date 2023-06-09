@@ -3,6 +3,8 @@ import logo from './img/p4.png';
 import './App.css';
 import {pico4Apps} from './pico4Apps'
 
+const steamUrl = "https://store.steampowered.com/app/";
+
 function App() {
     const [apps, setApps] = useState<any[]>([]);
     const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
@@ -18,7 +20,7 @@ function App() {
     }
 
     const openInNewTab = (url: string) => {
-        window.open("https://store.steampowered.com/app/" + url, '_blank', 'noreferrer');
+        window.open(steamUrl + url, '_blank', 'noreferrer');
     };
 
     return (
@@ -53,15 +55,21 @@ function App() {
                         </div>
                         <div>{app.name}</div>
                         <br/>
-                    </div>;
+                    </div>
                 })
             }
 
             <footer className="footer">
                 <div className="footer-div">
-                    <a target="_blank" href="https://github.com/SasPes/pico-4-apps"><div className="icon github"></div></a>
-                    <a target="_blank" href="https://www.youtube.com/SasPes"><div className="icon youtube"></div></a>
-                    <a target="_blank" href="https://discordapp.com/users/442800871257145345"><div className="icon discord"></div></a>
+                    <a target="_blank" href="https://github.com/SasPes/pico-4-apps">
+                        <div className="icon github"></div>
+                    </a>
+                    <a target="_blank" href="https://www.youtube.com/SasPes">
+                        <div className="icon youtube"></div>
+                    </a>
+                    <a target="_blank" href="https://discordapp.com/users/442800871257145345">
+                        <div className="icon discord"></div>
+                    </a>
                 </div>
                 <p className="copyright">SasPes © 2023</p>
             </footer>
