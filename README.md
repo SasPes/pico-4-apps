@@ -1,6 +1,6 @@
 # Pico 4 Apps (P4A)
 
-List of Pico 4 apps with pictures, rating and links to Steam page  
+List of Pico 4 apps with pictures, filter, rating and links to Steam page  
 
 https://p4a.onrender.com
 
