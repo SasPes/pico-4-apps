@@ -62,6 +62,7 @@ https://store.steampowered.com/api/appdetails?filters=screenshots&appids=1104380
 
 ### Links
 - https://picomyp.ml/
+- https://picop.ml
 - https://gist.github.com/Js41637/137b2b947e64c0e80d6dacd6b42e1754
 - https://steamdb.info/blog/steamdb-rating/#:~:text=They%20just%20divide%20the%20positive,and%20a%20single%20negative%20review
 - https://render.com/
