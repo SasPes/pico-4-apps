@@ -59,8 +59,6 @@ function App() {
 
             {
                 apps.map(app => {
-                    console.log(activeIndex)
-
                     let show = false;
                     if (activeIndex === 0) {
                         show = true;
@@ -71,7 +69,7 @@ function App() {
                     }
 
                     if (show) {
-                        numberOfApps++;
+                        numberOfApps = numberOfApps + 1;
                         return <div className="div-flex">
                             <div className="badge_div">
                             <span className="badge">
