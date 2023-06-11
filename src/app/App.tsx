@@ -1,11 +1,11 @@
 import {useEffect, useReducer, useState} from 'react'
 import logo from '../img/p4.png';
 import '../css/App.css';
-import {Pico4Apps, pico4Apps} from './Pico4Apps'
+import {pico4Apps} from './Pico4Apps'
 
 const steamUrl = "https://store.steampowered.com/app/";
-
-const buttonText = ['All', '9+', '8+', '7+', '6+', '5+', 'NaN'];
+const filterButton = ['All', '9+', '8+', '7+', '6+', '5+', '4+', 'NaN'];
+let numberOfApps = 0;
 
 function App() {
     const [apps, setApps] = useState<any[]>([]);
@@ -19,10 +19,12 @@ function App() {
     }, []);
 
     function handleClick() {
+        numberOfApps = 0;
         forceUpdate();
     }
 
     const handleFilterClick = (value: number) => {
+        numberOfApps = 0;
         setActiveIndex(value);
     }
 
@@ -34,7 +36,7 @@ function App() {
         <div className="app">
             <header className="app-header">
                 <a href="https://www.picoxr.com/uk/products/pico4" target='_blank'><img src={logo} className="app-logo" alt="logo"/></a>
-                <p>List of Pico 4 Apps [{apps.length}]</p>
+                <p>List of Pico 4 Apps [{numberOfApps}]</p>
             </header>
 
             {apps && apps.length ? "" : (
@@ -48,7 +50,7 @@ function App() {
             <div>
                 <button className="btn" onClick={handleClick}>⟳</button>
                 {
-                    buttonText.map((text, index) => {
+                    filterButton.map((text, index) => {
                             return <button onClick={() => handleFilterClick(index)} className={index === activeIndex ? "btn active" : "btn"} id={`button-${index}`}>{text}</button>
                         }
                     )
@@ -63,12 +65,13 @@ function App() {
                     if (activeIndex === 0) {
                         show = true;
                     } else {
-                        if (app.steamApp.rating.startsWith(buttonText[activeIndex].substring(0, 1))) {
+                        if (app.steamApp.rating.startsWith(filterButton[activeIndex].substring(0, 1))) {
                             show = true;
                         }
                     }
 
                     if (show) {
+                        numberOfApps++;
                         return <div className="div-flex">
                             <div className="badge_div">
                             <span className="badge">
