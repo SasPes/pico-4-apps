@@ -1,17 +1,31 @@
 import {proxyURL} from "../app/Pico4Apps";
 
 const appsUrl = 'https://picomyp.ml';
+const alternativeAppsUrl = 'https://picop.ml';
+export let fetchedUrl = appsUrl.replace('https://', '');
 
 export async function getAppsName() {
-    const html = (await (await fetch(proxyURL + appsUrl)).text());
+    let html = (await (await fetch(proxyURL + appsUrl)).text());
 
     const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    const pre = doc.querySelectorAll("a");
+    let doc = parser.parseFromString(html, "text/html");
+    let pre = doc.querySelectorAll("a");
+    let apps = Array.from(pre);
+
+    console.log(apps.length);
+    console.log(apps[0].innerHTML);
+
+    if (apps.length === 2 && apps[1].innerHTML.startsWith('temporarily offline due to ddos')) {
+        fetchedUrl = alternativeAppsUrl.replace('https://', '');
+        html = (await (await fetch(proxyURL + alternativeAppsUrl)).text());
+        doc = parser.parseFromString(html, "text/html");
+        pre = doc.querySelectorAll("a");
+        apps = Array.from(pre);
+    }
 
     let toRemove: string[] = [];
 
-    let appsName = Array.from(pre).map(data => {
+    let appsName = apps.map(data => {
         const nameOrg: string = data.innerHTML;
         if (nameOrg.endsWith("/")) {
             toRemove.push(nameOrg);

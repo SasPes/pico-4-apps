@@ -205,6 +205,19 @@
     margin-bottom: 15px;
 }
 
+.btn-apps {
+    outline: none;
+    padding: 5px 9px;
+    background-color: #f1f1f1;
+    border: solid white;
+    border-radius: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 /* Add a light grey background on mouse-over */
 .btn:hover {
     background-color: #ddd;

@@ -2,6 +2,7 @@ import {useEffect, useReducer, useState} from 'react'
 import logo from '../img/p4.png';
 import '../css/App.css';
 import {pico4Apps} from './Pico4Apps'
+import {fetchedUrl} from "../fetch/AppsName";
 
 const steamUrl = "https://store.steampowered.com/app/";
 const filterButton = ['All', '9+', '8+', '7+', '6+', '5+', '4+', 'NaN'];
@@ -33,7 +34,11 @@ function App() {
         <div className="app">
             <header className="app-header">
                 <a href="https://www.picoxr.com/uk/products/pico4" target='_blank'><img src={logo} className="app-logo" alt="logo"/></a>
-                <p>List of Pico 4 Apps [{apps.length}]</p>
+                <div>
+                    <p style={{display: "inline-block"}}>Pico 4 Apps</p>
+                    <button style={{display: "inline-block"}} className="btn-apps" onClick={handleClick}>{apps.length}</button>
+                    <p style={{display: "inline-block"}}>{fetchedUrl}</p>
+                </div>
             </header>
 
             {apps && apps.length ? "" : (
