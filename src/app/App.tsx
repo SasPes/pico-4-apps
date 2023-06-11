@@ -5,7 +5,6 @@ import {pico4Apps} from './Pico4Apps'
 
 const steamUrl = "https://store.steampowered.com/app/";
 const filterButton = ['All', '9+', '8+', '7+', '6+', '5+', '4+', 'NaN'];
-let numberOfApps = 0;
 
 function App() {
     const [apps, setApps] = useState<any[]>([]);
@@ -19,12 +18,10 @@ function App() {
     }, []);
 
     function handleClick() {
-        numberOfApps = 0;
         forceUpdate();
     }
 
     const handleFilterClick = (value: number) => {
-        numberOfApps = 0;
         setActiveIndex(value);
     }
 
@@ -36,7 +33,7 @@ function App() {
         <div className="app">
             <header className="app-header">
                 <a href="https://www.picoxr.com/uk/products/pico4" target='_blank'><img src={logo} className="app-logo" alt="logo"/></a>
-                <p>List of Pico 4 Apps [{numberOfApps}]</p>
+                <p>List of Pico 4 Apps [{apps.length}]</p>
             </header>
 
             {apps && apps.length ? "" : (
@@ -69,7 +66,6 @@ function App() {
                     }
 
                     if (show) {
-                        numberOfApps = numberOfApps + 1;
                         return <div className="div-flex">
                             <div className="badge_div">
                             <span className="badge">
