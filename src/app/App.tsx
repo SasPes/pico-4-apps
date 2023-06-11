@@ -6,7 +6,6 @@ import {fetchedUrl} from "../fetch/AppsName";
 
 const steamUrl = "https://store.steampowered.com/app/";
 const filterButton = ['All', '9+', '8+', '7+', '6+', '5+', '4+', 'NaN'];
-let numberOfApps = 0;
 
 function App() {
     const [apps, setApps] = useState<any[]>([]);
@@ -21,12 +20,10 @@ function App() {
 
     function handleClick() {
         forceUpdate();
-        numberOfApps = 0;
     }
 
     const handleFilterClick = (value: number) => {
         setActiveIndex(value);
-        numberOfApps = 0;
     }
 
     const openInNewTab = (url: string) => {
@@ -39,7 +36,7 @@ function App() {
                 <a href="https://www.picoxr.com/uk/products/pico4" target='_blank'><img src={logo} className="app-logo" alt="logo"/></a>
                 <div>
                     <p style={{display: "inline-block"}}>Pico 4 Apps</p>
-                    <button style={{display: "inline-block"}} className="btn-apps" onClick={handleClick}>{numberOfApps}</button>
+                    <button style={{display: "inline-block"}} className="btn-apps" onClick={handleClick}>{apps.length}</button>
                     <p style={{display: "inline-block"}}>{fetchedUrl}</p>
                 </div>
             </header>
@@ -74,7 +71,6 @@ function App() {
                     }
 
                     if (show) {
-                        numberOfApps++;
                         return <div className="div-flex">
                             <div className="badge_div">
                             <span className="badge">

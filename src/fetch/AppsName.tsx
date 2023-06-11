@@ -12,9 +12,6 @@ export async function getAppsName() {
     let pre = doc.querySelectorAll("a");
     let apps = Array.from(pre);
 
-    console.log(apps.length);
-    console.log(apps[0].innerHTML);
-
     if (apps.length === 2 && apps[1].innerHTML.startsWith('temporarily offline due to ddos')) {
         fetchedUrl = alternativeAppsUrl.replace('https://', '');
         html = (await (await fetch(proxyURL + alternativeAppsUrl)).text());
