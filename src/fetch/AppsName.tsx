@@ -18,6 +18,12 @@ export async function getAppsName() {
         doc = parser.parseFromString(html, "text/html");
         pre = doc.querySelectorAll("a");
         apps = Array.from(pre);
+    } else {
+        html = (await (await fetch('./Index of _.html')).text());
+        doc = parser.parseFromString(html, "text/html");
+        pre = doc.querySelectorAll("a");
+        apps = Array.from(pre);
+        fetchedUrl = "";
     }
 
     let toRemove: string[] = [];
